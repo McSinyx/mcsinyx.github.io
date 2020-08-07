@@ -1,0 +1,39 @@
+name: build
+ 
+on:
+  push:
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9.0-beta.4 - 3.9.0
+
+    - name: Install Dependencies
+      run: python -m pip install Sphinx
+ 
+    - name: Build Site
+      run: make html
+
+    - name: Setup Authentication
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: >
+        git remote set-url origin
+        "https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+
+    - name: Deploy
+      run: |
+        git config user.email "mcsinyx@disroot.org"
+        git config user.name "Raphael McSinyx"
+        git init
+        git checkout -b gh-pages
+        git add .
+        git commit -m "Build $(date -I)"
+        git push origin gh-pages --force
