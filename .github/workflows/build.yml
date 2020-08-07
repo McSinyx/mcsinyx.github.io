@@ -18,7 +18,7 @@ jobs:
     - name: Install Sphinx
       run: python -m pip install Sphinx
  
-    - name: Setup Authentication
+    - name: Configure git
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -26,6 +26,7 @@ jobs:
         git config user.name Nguyễn\ Gia\ Phong
         git remote set-url origin \
           https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
+        git fetch origin gh-pages
 
     - name: Build and Deploy
       run: |
@@ -33,7 +34,6 @@ jobs:
         make html
         mv --target-directory=$tmpdir doctrees html
 
-        git fetch origin gh-pages
         git switch gh-pages
         git rm -r doctrees html
         mv --target-directory=. $tmpdir/{doctrees,html}
