@@ -1,5 +1,5 @@
-Hi!  My name is McSinyx
-=======================
+About Me
+========
 
 .. toctree::
    :maxdepth: 2

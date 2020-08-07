@@ -15,25 +15,30 @@ jobs:
       with:
         python-version: 3.9.0-beta.4 - 3.9.0
 
-    - name: Install Dependencies
+    - name: Install Sphinx
       run: python -m pip install Sphinx
  
-    - name: Build Site
-      run: make html
-
     - name: Setup Authentication
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: >
-        git remote set-url origin
-        "https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
-
-    - name: Deploy
       run: |
-        git config user.email "mcsinyx@disroot.org"
-        git config user.name "Raphael McSinyx"
-        git init
-        git checkout -b gh-pages
-        git add .
-        git commit -m "Build $(date -I)"
-        git push origin gh-pages --force
+        git config user.email mcsinyx@disroot.org
+        git config user.name Nguyễn\ Gia\ Phong
+        git remote set-url origin \
+          https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
+
+    - name: Build and Deploy
+      run: |
+        tmpdir=$(mktemp --directory)
+        make html
+        mv --target-directory=$tmpdir doctrees html
+
+        git fetch origin gh-pages
+        git switch gh-pages
+        git rm -r doctrees html
+        mv --target-directory=. $tmpdir/{doctrees,html}
+        rm -r $tmpdir
+
+        git add doctrees html
+        git commit -m "Build at $(date --iso-8601=seconds)"
+        git push origin gh-pages
