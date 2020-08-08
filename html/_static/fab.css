@@ -1,0 +1,31 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css';
+
+.fab {
+    padding: 0.5em;
+    font-size: 2em;
+    width: 1em;
+    text-align: center;
+    text-decoration: none;
+    margin: 0 0.16em;
+    border-radius: 50%;
+    color: white;
+}
+
+.fab:hover {
+    text-decoration: none;
+    color: white;
+    opacity: 0.8;
+}
+
+.fa-facebook { background: #3b5998 }
+.fa-flickr { background: #f40083 }
+.fa-github { background: #24292e }
+.fa-instagram { background: #125688 }
+.fa-linkedin { background: #007bb5 }
+.fa-reddit { background: #ff5700 }
+.fa-rss { background: #ff6600 }
+.fa-soundcloud { background: #ff5500 }
+.fa-stack-exchange { background: #242729 }
+.fa-tumblr { background: #2c4762 }
+.fa-twitter { background: #55acee }
+.fa-youtube { background: #bb0000 }
