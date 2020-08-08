@@ -15,9 +15,11 @@ jobs:
       with:
         python-version: 3.9.0-beta.4 - 3.9.0
 
-    - name: Install Sphinx
-      run: python -m pip install Sphinx
- 
+    - name: Build Site
+      run: |
+        python -m pip install Sphinx
+        make html
+
     - name: Configure git
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,17 +30,12 @@ jobs:
           https://token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
         git fetch origin gh-pages
 
-    - name: Build and Deploy
+    - name: Deploy Site
       run: |
-        tmpdir=$(mktemp --directory)
-        make html
-        mv --target-directory=$tmpdir doctrees html
-
         git switch gh-pages
         git rm -r doctrees html
-        mv --target-directory=. $tmpdir/{doctrees,html}
-        rm -r $tmpdir
+        mv build/* .
 
-        git add doctrees html
+        git add .
         git commit -m "Build at $(date --iso-8601=seconds)"
         git push origin gh-pages

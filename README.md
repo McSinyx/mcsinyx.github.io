@@ -1,4 +1,4 @@
-# Continuous Documentation: Hosting Sphinx on GitHub Pages
+# GitHub Pages Generated Using Sphinx
 
 My personal site based on Michael Altfield's [idea].
 

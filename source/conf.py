@@ -5,7 +5,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # Project information
-project = 'R. McSinyx'
+project = '/home/cnx'
 copyright = '2018-2020, Nguyễn Gia Phong'
 author = 'Nguyễn Gia Phong'
 
@@ -24,10 +24,12 @@ exclude_patterns = []
 
 # Options for HTML output
 html_theme = 'alabaster'
-html_theme_options = {'fixed_sidebar': True, 'show_relbars': True}
+html_theme_options = {'fixed_sidebar': True}
 
+html_title = 'Raphael McSinyx'
 html_logo = 'CnX.png'
 html_favicon = 'favicon.ico'
+html_css_files = ['fab.css']
 html_show_copyright = False
 
 # Add any paths that contain custom static files (such as style sheets)
