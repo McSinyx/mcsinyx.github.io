@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Cascade Connection &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Infinite Sequences: A Case Study in Functional Python" href="conseq.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../work/index.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Bootleg Lambda Calculus</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="conseq.html">Infinite Sequences: A Case Study in Functional Python</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">System Cascade Connection</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Bootleg Lambda Calculus</a><ul>
+      <li>Previous: <a href="conseq.html" title="previous chapter">Infinite Sequences: A Case Study in Functional Python</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="system-cascade-connection">
+<h1>System Cascade Connection<a class="headerlink" href="#system-cascade-connection" title="Permalink to this headline">¶</a></h1>
+<p>Given two discrete-time systems <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> connected in cascade
+to form a new system <span class="math notranslate nohighlight">\(C = x \mapsto B(A(x))\)</span>.</p>
+<div class="section" id="linearity">
+<h2>Linearity<a class="headerlink" href="#linearity" title="Permalink to this headline">¶</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are linear, i.e. for all signals <span class="math notranslate nohighlight">\(x_i\)</span> and scalars <span class="math notranslate nohighlight">\(a_i\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A\left(n \mapsto \sum_i a_i x_i[n]\right) &amp;= n \mapsto \sum_i a_i A(x_i)[n]\\
+B\left(n \mapsto \sum_i a_i x_i[n]\right) &amp;= n \mapsto \sum_i a_i B(x_i)[n]\end{split}\]</div>
+<p>then <span class="math notranslate nohighlight">\(C\)</span> is also linear</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C\left(n \mapsto \sum_i a_i x_i[n]\right)
+&amp;= B\left(A\left(n \mapsto \sum_i a_i x_i[n]\right)\right)\\
+&amp;= B\left(n \mapsto \sum_i a_i A(x_i)[n]\right)\\
+&amp;= n \mapsto \sum_i a_i B(A(x_i))[n]\\
+&amp;= n \mapsto \sum_i a_i C(x_i)[n]\end{split}\]</div>
+</div>
+<div class="section" id="time-invariance">
+<h2>Time Invariance<a class="headerlink" href="#time-invariance" title="Permalink to this headline">¶</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are time invariant,
+i.e. for all signals <span class="math notranslate nohighlight">\(x\)</span> and integers <span class="math notranslate nohighlight">\(k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A(n \mapsto x[n - k]) &amp;= n \mapsto A(x)[n - k]\\
+B(n \mapsto x[n - k]) &amp;= n \mapsto B(x)[n - k]\\\end{split}\]</div>
+<p>then <span class="math notranslate nohighlight">\(C\)</span> is also time invariant</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}C(n \mapsto x[n - k])
+&amp;= B(A(n \mapsto x[n - k]))\\
+&amp;= B(n \mapsto A(x)[n - k])\\
+&amp;= n \mapsto B(A(x))[n - k]\\
+&amp;= n \mapsto C(x)[n - k]\end{split}\]</div>
+</div>
+<div class="section" id="lti-ordering">
+<h2>LTI Ordering<a class="headerlink" href="#lti-ordering" title="Permalink to this headline">¶</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are linear and time-invariant, there exists
+signals <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> such that for all signals <span class="math notranslate nohighlight">\(x\)</span>,
+<span class="math notranslate nohighlight">\(A = x \mapsto x * g\)</span> and <span class="math notranslate nohighlight">\(B = x \mapsto x * h\)</span>, thus</p>
+<div class="math notranslate nohighlight">
+\[B(A(x)) = B(x * g) = x * g * h = x * h * g = A(x * h) = A(B(x))\]</div>
+<p>or interchanging <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> order does not change <span class="math notranslate nohighlight">\(C\)</span>.</p>
+</div>
+<div class="section" id="causality">
+<h2>Causality<a class="headerlink" href="#causality" title="Permalink to this headline">¶</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are causal,
+i.e. for all signals <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and any choise of integer <span class="math notranslate nohighlight">\(k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\forall n &lt; k, x[n] = y[n]\quad
+\Longrightarrow &amp;\;\begin{cases}
+  \forall n &lt; k, A(x)[n] = A(y)[n]\\
+  \forall n &lt; k, B(x)[n] = B(y)[n]
+\end{cases}\\
+\Longrightarrow &amp;\;\forall n &lt; k, B(A(x))[n] = B(A(y))[n]\\
+\Longleftrightarrow &amp;\;\forall n &lt; k, C(x)[n] = C(y)[n]\end{split}\]</div>
+<p>then <span class="math notranslate nohighlight">\(C\)</span> is also causal.</p>
+</div>
+<div class="section" id="bibo-stability">
+<h2>BIBO Stability<a class="headerlink" href="#bibo-stability" title="Permalink to this headline">¶</a></h2>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are stable, i.e. there exists a signal <span class="math notranslate nohighlight">\(x\)</span>
+and scalars <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> that for all integers <span class="math notranslate nohighlight">\(n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}|x[n]| &lt; a &amp;\Longrightarrow |A(x)[n]| &lt; b\\
+|x[n]| &lt; a &amp;\Longrightarrow |B(x)[n]| &lt; b\end{split}\]</div>
+<p>then <span class="math notranslate nohighlight">\(C\)</span> is also stable, i.e. there exists a signal <span class="math notranslate nohighlight">\(x\)</span>
+and scalars <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> that for all integers <span class="math notranslate nohighlight">\(n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}|x[n]| &lt; a\quad
+\Longrightarrow &amp;\;|A(x)[n]| &lt; b\\
+\Longrightarrow &amp;\;|B(A(x))[n]| &lt; c\\
+\Longleftrightarrow &amp;\;|C(x)[n]| &lt; c\end{split}\]</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/math/system.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
