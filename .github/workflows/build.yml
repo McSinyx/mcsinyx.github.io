@@ -33,9 +33,11 @@ jobs:
     - name: Deploy Site
       run: |
         git switch gh-pages
-        git rm -r doctrees html
-        mv build/* .
+        git rm -r .
+        shopt -s dotglob
+        mv build/html/* .
 
+        rm -r build
         git add .
         git commit -m "Build at $(date --iso-8601=seconds)"
         git push origin gh-pages
