@@ -32,7 +32,7 @@ a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
    :maxdepth: 2
    :hidden:
 
-   work/index
+   works
    meat/index
    math/index
 
