@@ -7,6 +7,34 @@ Applications
 Libraries
 ---------
 
+Palace
+^^^^^^
+
+`Pythonic Audio Library and Codecs Environment`__ provides
+common higher-level API for audio rendering using OpenAL:
+
+* 3D positional rendering, with HRTF__ support for stereo systems
+* Environmental effects: reverb, atmospheric air absorption,
+  sound occlusion and obstruction
+* Out-of-the-box codec support: FLAC, MP3, Ogg Vorbis, Opus, WAV, AIFF, etc.
+
+Palace wraps around the C++ interface alure__ using Cython__ for a safe and
+convenient interface with type hinting, data descriptors and context managers,
+following :pep:`8#naming-conventions` (``PascalCase.snake_case``).
+
+__ https://mcsinyx.github.io/palace
+__ https://en.wikipedia.org/wiki/Head-related_transfer_function
+__ https://github.com/kcat/alure
+__ https://cython.org
+
+Lazip
+^^^^^
+
+Lazip__ is a Python library providing a read-only file-like object
+lazily mapped to a ZIP file over HTTP via range requests.
+
+__ https://lazip.rtfd.io/
+
 Video Games
 -----------
 
