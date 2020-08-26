@@ -1,0 +1,110 @@
+The Wonderful Wizard of O'zip
+=============================
+
+*Never give up… No one knows what's going to happen next.*
+
+Preface
+-------
+
+Greetings and best wishes!  I had a lot of fun during the last week,
+although admittedly nothing was really finished.  In summary,
+these are the works I carried out in the last seven days:
+
+* Finilizing :pip:`utilities for parallelization <8320>`
+* :pip:`Continuing experimenting <8467>`
+  on :pip:`using lazy wheels or dependency resolution <8442>`
+* Polishing up :pip:`the patch <8411>` refactoring
+  ``operations.prepare.prepare_linked_requirement``
+* Adding ``flake8-logging-format``
+  :pip:`to the linter <8423#issuecomment-645418725>`
+* Splitting :pip:`the linting patch <8456>` from :pip:`the PR adding
+  the license requirement to vendor README <8332>`
+
+The ``multiprocessing[.dummy]`` wrapper
+---------------------------------------
+
+Yes, you read it right, this is the same section as last fortnight's blog.
+My mentor Pradyun Gedam gave me a green light to have :pip:`8411` merged
+without support for Python 2 and the non-lazy map variant, which turns out
+to be troublesome for multithreading.
+
+The tests still needs to pass of course and the flaky tests (see failing tests
+over Azure Pipeline in the past) really gave me a panic attack earlier today.
+We probably need to mark them as xfail or investigate why they are
+undeterministic specifically on Azure, but the real reason I was *all caught up
+and confused* was that the unit tests I added mess with the cached imports
+and as ``pip``'s tests are run in parallel, who knows what it might affect.
+I was so relieved to not discover any new set of tests made flaky by ones
+I'm trying to add!
+
+The file-like object mapping ZIP over HTTP
+------------------------------------------
+
+This is where the fun starts.  Before we dive in, let's recall some
+background information on this.  As discovered by Danny McClanahan
+in :pip:`7819`, it is possible to only download a potion of a wheel
+and it's still valid for ``pip`` to get the distribution's metadata.
+In the same thread, Daniel Holth suggested that one may use
+HTTP range requests to specifically ask for the tail of the wheel,
+where the ZIP's central directory record as well as where usually
+``dist-info`` (the directory containing ``METADATA``) can be found.
+
+Well, *usually*.  While :pep:`427` does indeed recommend
+
+   Archivers are encouraged to place the ``.dist-info`` files physically
+   at the end of the archive.  This enables some potentially interesting
+   ZIP tricks including the ability to amend the metadata without
+   rewriting the entire archive.
+
+one of the mentioned *tricks* is adding shared libraries to wheels
+of extension modules (using e.g. ``auditwheel`` or ``delocate``).
+Thus for non-pure Python wheels, it is unlikely that the metadata
+lie in the last few megabytes.  Ignoring source distributions is bad enough,
+we can't afford making an optimization that doesn't work for extension modules,
+which are still an integral part of the Python ecosystem )-:
+
+But hey, the ZIP's directory record is warrantied to be at the end of the file!
+Couldn't we do something about that?  The short answer is yes.  The long answer
+is, well, yessssssss! That, plus magic provided by most operating systems,
+this is what we figured out:
+
+#. We can download a realatively small chunk at the end of the wheel
+   until it is recognizable as a valid ZIP file.
+#. In order for the end of the archive to actually appear as the end to
+   ``zipfile``, we feed to it an object with ``seek`` and ``read`` defined.
+   As navigating to the rear of the file is performed by calling ``seek``
+   with relative offset and ``whence=SEEK_END`` (see ``man 3 fseek``
+   for more details), we are completely able to make the wheels in the cloud
+   to behave as if it were available locally.
+
+   .. image:: cloud.gif
+
+#. For large wheels, it is better to store them in hard disks instead of memory.
+   For smaller ones, it is also preferable to store it as a file to avoid
+   (error-prony and often not really efficient) manual tracking and joining
+   of downloaded segments.  We only use a small potion of the wheel, however
+   just in case one is wonderring, we have very little control over
+   when ``tempfile.SpooledTemporaryFile`` rolls over, so the memory-disk hybrid
+   is not exactly working as expected.
+#. With all these in mind, all we have to do is to define an intermediate object
+   check for local availability and download if needed on calls to ``read``,
+   to lazily provide the data over HTTP and reduce execution time.
+
+The only theoretical challenge left is to keep track of downloaded intervals,
+which I finally figured out after a few trials and errors.  The code
+was submitted as a pull request to ``pip`` at :pip:`8467`.  A more modern
+(read: Python 3-only) variant was packaged and uploaded to PyPI under
+the name of lazip_.  I am unaware of any use case for it outside of ``pip``,
+but it's certainly fun to play with d-:
+
+What's next?
+------------
+
+I have been falling short of getting the PRs mention above merged for
+quite a while.  With ``pip``'s next beta coming really soon, I have to somehow
+make the patches reach a certain standard and enough attention to be part of
+the pre-release—beta-testing would greatly help the success of the GSoC project.
+To other GSoC students and mentors reading this, I also hope your projects
+to turn out successful!
+
+.. _lazip: https://pypi.org/project/lazip/

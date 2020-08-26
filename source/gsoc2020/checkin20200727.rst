@@ -1,0 +1,35 @@
+Fifth Check-In
+==============
+
+Hello and I hope y'all are still doing well!
+
+What did I do last week?
+------------------------
+
+I was not really productive last week—most of the following tickets are fillers
+to make use of the spare cycles I had when I was still trying to figure out
+the way to implement the main work.
+
+* Finalize the ``--use-feature=fast-deps`` flag (:pip:`8588`)
+* Improve mocking of environment variables in the test suit (:pip:`8614`)
+* Finalize the fix for verbose/quiet options specified via
+  configuration files and environment variables (:pip:`8578`)
+* Clean up a tiny bit in the resolver internal API (:pip:`8629`)
+* Start working on seperating the download of wheels
+  from dependency resolution (:pip:`8638`)
+
+Did I get stuck anywhere?
+-------------------------
+
+I'm struggling on refactoring the code to support separate download.
+``pip``'s codebase was not intended for this and thus there are
+many execution paths and other details entangled around the relevant area.
+
+What is coming up next?
+-----------------------
+
+``pip`` 20.2 is going to be released within the next few days with
+``--use-feature=fast-deps`` included and I'm mentally prepare to fix
+any undiscovered problem.  At the same time, I will continue working
+on :pip:`8638` and hopefully get it done soon enough to begin drafting
+download parallelization strategies, mostly with the UI.

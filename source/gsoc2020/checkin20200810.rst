@@ -1,0 +1,31 @@
+Sixth Check-In
+==============
+
+Hello there!
+
+What did I do last week?
+------------------------
+
+It has been a quite fun week for me, given the current state of
+development and the newly dicovered bugs thanks to pip 20.2 release:
+
+* Initiate discussion with the maintainers of pip on isolating
+  networking code for late download in parallel (:pip:`8697`)
+* Discuss the UI of parallel download (:pip:`8698`)
+* Log debug information relating lazy wheel decision (:pip:`8710`)
+* Disable caching for range requests (:pip:`8716`)
+* Dedent late download logs (:pip:`8722`)
+* Add a hook for batch downloading (third attempt I think) (:pip:`8737`)
+* Test hash checking for fast-deps (:pip:`8743`)
+
+Did I get stuck anywhere?
+-------------------------
+
+Not exactly, everything is going smoothly and I'm feeling awesome!
+
+What is coming up next?
+-----------------------
+
+I'll try to solve :pip:`8697` and :pip:`8698` within the next few days.
+I am optimistic that the parallel download prototype will be done
+within this week.

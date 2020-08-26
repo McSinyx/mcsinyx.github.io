@@ -1,0 +1,84 @@
+I've Walked 500 Miles…
+======================
+
+.. epigraph::
+
+   | … and I would walk 500 more
+   | Just to be the man who walks a thousand miles
+   | To fall down at your door
+
+.. image:: 500-miles.gif
+
+The Main Road
+-------------
+
+Hi, have you met ``fast-deps``?  It's (going to be) the name of ``pip``'s
+experimental feature that may improve the speed of dependency resolution
+of the new resolver.  By avoid downloading whole wheels to just
+obtain metadata, it is especially helpful when ``pip`` has to do
+heavy backtracking to resolve conflicts.
+
+Thanks to :pip:`Chris Hunt's review on GH-8537 <8532#discussion_r453990728>`,
+my mentor Pradyun Gedam and I worked out a less hacky approach to inteject
+the call to lazy wheel during the resolution process.  A new PR :pip:`8588`
+was filed to implement it—I could have *just* worked on top of the old PR
+and rebased, but my ``git`` skill is far from gud enough to confidently do it.
+
+Testing this one has been a lot of fun though.  At first, integration tests
+were added as a rerun of the tests for the new resolver, with an additional flag
+to use feature ``fast-deps``.  It indeed made me feel guilty towards Travis_,
+who has to work around 30 minutes more every run. Per Chris Hunt's suggestion,
+in the new PR, I instead write a few functional tests for the area relating
+the most to the feature, namely ``pip``'s subcommands ``wheel``,
+``download`` and ``install``.
+
+It was also suggested that a mock server with HTTP range requests support
+might be better (in term of performance and reliablilty) than for testing.
+However, :pip:`I have yet to be able to make Werkzeug do it
+<8584#issuecomment-659227702>`.
+
+Why did I say I'm half way there?  With the parallel utilities merged and a way
+to quickly get the list of distribution to be downloaded being really close,
+what left is *only* to figure out a way to properly download them in parallel.
+With no distribution to be added during the download progress, the model of this
+will fit very well with the architecture in `my original proposal`_.
+A batch downloader can be implemented to track the progress of each download
+and thus report them cleanly as e.g. progress bar or percentage. This is
+the part I am second-most excited about of my GSoC project this summer
+(after the synchronization of downloads written in my proposal, which was then
+superseded by ``fast-deps``) and I can't wait to do it!
+
+The Side Quests
+---------------
+
+As usual, I make sure that I complete every side quest I see during the journey:
+
+* :pip:`8568`: Declare constants in ``configuration.py`` as such
+* :pip:`8571`: Clean up ``Configuration.unset_value``
+  and nit the class' ``__init__``
+* :pip:`8578`: Allow verbose/quite level
+  to be specified via config file and env var
+* :pip:`8599`: Replace tabs by spaces for consistency
+
+Snap Back to Reality
+--------------------
+
+A bit about me, I actually walked 500 meters earlier today to a bank
+and walked 500 more to another to prepare my Visa card for purchasing
+the upcoming Pinephone prototype.  It's one of the first smartphones
+to fully support a GNU/Linux distribution, where one can run desktop apps
+(including proper terminals) as well as traditional services like SSH,
+HTTP server and IPFS node because why not?  Just a few hours ago,
+I pre-ordered the `postmarketOS community edition`_ with additional hardware
+for convergence.
+
+If you did not come here for a Pinephone ad, please take my apologies though d-;
+and to ones reading this, I hope you all can become the person who walks
+a thousand miles to fall down at the door opening to all
+what you ever wished for!
+
+.. _Travis: https://travis-ci.com/
+.. _my original proposal:
+   https://blogs.python-gsoc.org/media/proposals/pip-parallel-dl.pdf
+.. _postmarketOS community edition:
+   https://postmarketos.org/blog/2020/07/15/pinephone-ce-preorder/
