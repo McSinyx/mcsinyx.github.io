@@ -1,0 +1,33 @@
+Fourth Check-In
+===============
+
+Hello there! I'm having my second year's last exam tomorrow,
+but it `feels like summer`_ already!  I've been finalizing quite a few things
+to get them ready for pip 20.2b2.
+
+What did I do last week?
+------------------------
+
+I've spent most of the time on getting :pip:`the opt-in <8532>` for obtaining
+dependency information via lazy wheels ready.  It will be available as
+``--use-feature=fast-deps`` and only has effect when
+``--use-feature=2020-resolver`` also presents.
+
+While waiting for reviews and suggestions, I made some patches for
+internal cleansing, namely :pip:`8568`, :pip:`8571` and :pip:`8578`.
+Some of the similar patches I made earlier were also merged last week:
+:pip:`8456` and :pip:`8538`.
+
+Did I get stuck anywhere?
+-------------------------
+
+Not really, everything was going as expected for me.
+
+What is coming up next?
+-----------------------
+
+After :pip:`8532`, I'll work on the parallel download of the postponed wheels.
+My main current concern is with how the download progress will be reported
+to the users, but I think I'll figure it out soon.
+
+.. _feels like summer: https://www.youtube.com/watch?v=F1B9Fk_SgI0

@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Things Out &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sorting-things-out">
+<h1>Sorting Things Out<a class="headerlink" href="#sorting-things-out" title="Permalink to this headline">¶</a></h1>
+<p>Hi!  I really hope that everyone reading this is still doing okay,
+and if that isn’t the case, I wish you a good day!</p>
+<div class="section" id="pip-20-2-released">
+<h2><code class="docutils literal notranslate"><span class="pre">pip</span></code> 20.2 Released!<a class="headerlink" href="#pip-20-2-released" title="Permalink to this headline">¶</a></h2>
+<p>Last Wednesday, <code class="docutils literal notranslate"><span class="pre">pip</span></code> 20.2 was released, delivering the <code class="docutils literal notranslate"><span class="pre">2020-resolver</span></code>
+as well as many other improvements!  I was lucky to be able
+to get the <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code> feature to be included as part of the release.
+A brief description of this <em>experimental</em> feature as well as testing
+instruction can be found on <a class="reference external" href="https://discuss.python.org/t/announcement-pip-20-2-release/4863/2">Python Discuss</a>.</p>
+<p>The public exposure of the feature also remind me of some further
+<a class="reference external" href="https://github.com/pypa/pip/pull/8681">optimization</a> to make on <a class="reference external" href="https://github.com/pypa/pip/pull/8670">the lazy wheel</a>.
+Hopefully without download parallelization it would not be too slow
+to put off testing by concerned users of <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+</div>
+<div class="section" id="preparation-for-download-parallelization">
+<h2>Preparation for Download Parallelization<a class="headerlink" href="#preparation-for-download-parallelization" title="Permalink to this headline">¶</a></h2>
+<p>As of this moment, we already have:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8162#issuecomment-667504162">Multithreading pool fallback working</a></p></li>
+<li><p>An opt-in to use lazy wheel to optain dependency information,
+and thus getting a list of wheels at the end of resolution
+ready to be downloaded together</p></li>
+</ul>
+<p>What’s left is <em>only</em> to interject a parallel download somewhere after
+the dependency resolution step.  Still, this struggles me way more than
+I’ve ever imagined.  I got so stuck that I had to give myself a day off
+in the middle of the week (and study some Rust), then I came up with
+<a class="reference external" href="https://github.com/pypa/pip/pull/8638">something what was agreed upon as difficult to maintain</a>.</p>
+<p>Indeed, a large part of this is my fault, for not communicating the design
+thoroughly with <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s maintainers and not carefully noting stuff down
+during (verbal) discussions with my mentor.  Thankfully <a class="reference external" href="https://github.com/pypa/pip/pull/8685">Chris Hunt
+came to the rescue</a> and did a refactoring that will make my future work
+much easier and cleaner.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200803.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

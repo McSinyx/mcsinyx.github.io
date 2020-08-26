@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parallelizing Wheel Downloads &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="parallelizing-wheel-downloads">
+<h1>Parallelizing Wheel Downloads<a class="headerlink" href="#parallelizing-wheel-downloads" title="Permalink to this headline">¶</a></h1>
+<blockquote class="epigraph">
+<div><div class="line-block">
+<div class="line">And now it’s clear as this promise</div>
+<div class="line">That we’re making</div>
+<div class="line">Two progress bars into one</div>
+</div>
+</div></blockquote>
+<p>Hello there! It has been raining a lot lately and some mosquito has given me
+the Dengue fever today.  To whoever reading this, I hope it would never happen
+to you.</p>
+<div class="section" id="download-parallelization">
+<h2>Download Parallelization<a class="headerlink" href="#download-parallelization" title="Permalink to this headline">¶</a></h2>
+<p>I’ve been working on <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s download parallelization for quite a while now.
+As distribution download in <code class="docutils literal notranslate"><span class="pre">pip</span></code> was modeled as a lazily evaluated iterable
+of chunks, parallelizing such procedure is as simple as submitting routines
+that write files to disk to a worker pool.</p>
+<p>Or at least that is what I thought.</p>
+</div>
+<div class="section" id="progress-reporting-ui">
+<h2>Progress Reporting UI<a class="headerlink" href="#progress-reporting-ui" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span></code> is currently using customly defined progress reporting classes,
+which was not designed to working with multithreading code.  Firstly, I want to
+try using these instead of defining separate UI for multithreaded progresses.
+As they use system signals for termination, one must the progress bars has to be
+running the main thread.  Or sort of.</p>
+<p>Since the progress bars are designed as iterators, I realized that we
+can call <code class="docutils literal notranslate"><span class="pre">next</span></code> on them.  So quickly, I throw in some queues and locks,
+and prototyped the first <em>working</em> <a class="reference external" href="https://github.com/pypa/pip/pull/8771">implementation of
+progress synchronization</a>.</p>
+</div>
+<div class="section" id="performance-issues">
+<h2>Performance Issues<a class="headerlink" href="#performance-issues" title="Permalink to this headline">¶</a></h2>
+<p>Welp, I only said that it works, but I didn’t mention the performance,
+which is terrible.  I am pretty sure that the slow down is with
+the synchronization, since the <code class="docutils literal notranslate"><span class="pre">map_multithread</span></code> call doesn’t seem
+to trigger anything that may introduce any sort of blocking.</p>
+<p>This seems like a lot of fun, and I hope I’ll get better tomorrow
+to continue playing with it!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200817.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

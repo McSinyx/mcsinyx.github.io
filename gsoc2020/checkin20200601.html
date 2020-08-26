@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First Check-In &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="first-check-in">
+<h1>First Check-In<a class="headerlink" href="#first-check-in" title="Permalink to this headline">¶</a></h1>
+<p>Hi everyone, I am McSinyx, a Vietnamese undergraduate student
+who loves <a class="reference external" href="https://www.gnu.org/philosophy/free-sw.html">free software</a>.  This summer I am working with
+the maintainers and the contributors of <code class="docutils literal notranslate"><span class="pre">pip</span></code> to make
+the package manager <a class="reference external" href="https://github.com/pypa/pip/pull/825">download in parallel</a>.</p>
+<div class="section" id="what-did-i-do-during-the-community-bonding-period">
+<h2>What did I do during the community bonding period?<a class="headerlink" href="#what-did-i-do-during-the-community-bonding-period" title="Permalink to this headline">¶</a></h2>
+<p>Aside from bonding with <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s maintainers and contributors as well as
+with my mentors, I was also experimenting on the theoretical and technical
+obstacles blocking this GSoC project.  Pradyun Gedam (a mentor of mine)
+suggested making <a class="reference external" href="https://gist.github.com/McSinyx/513dbff71174fcc79f1cb600e09881af">a proof of concept</a> to determine if parallel downloading
+can play nicely with <a class="reference external" href="https://pypi.org/project/resolvelib/">ResolveLib</a>’s abstraction and we are reviewing it
+together.  On the technical side, we <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s committers are exploring
+<a class="reference external" href="https://github.com/pypa/pip/pull/8169">available options for parallelization</a> and I made an attempt to
+<a class="reference external" href="https://github.com/pypa/pip/pull/8320">make use of Python’s standard worker pool in a portable way</a>.</p>
+</div>
+<div class="section" id="did-i-get-stuck-anywhere">
+<h2>Did I get stuck anywhere?<a class="headerlink" href="#did-i-get-stuck-anywhere" title="Permalink to this headline">¶</a></h2>
+<p>Yes, of course!  Neither of the experiments above is finished as of
+this moment.  Though, I am optimistic that the issues will not be
+real blockers and we will figure that out in the next few days.</p>
+</div>
+<div class="section" id="what-is-coming-up-next">
+<h2>What is coming up next?<a class="headerlink" href="#what-is-coming-up-next" title="Permalink to this headline">¶</a></h2>
+<p>As planned, this week I am going to refactor the package downloading code
+in <code class="docutils literal notranslate"><span class="pre">pip</span></code>.  The main purpose is to decouple the networking code from
+the package preparation operation and make sure that it is thread-safe.</p>
+<p>In addition, I am also continuing mentioned experiments to have a better
+confidence on the future of this GSoC project.</p>
+<p>To other GSoC students, mentors and admins reading this, I am wishing
+you all good health and successful projects this summer!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/checkin20200601.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

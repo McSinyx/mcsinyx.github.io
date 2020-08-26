@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unexpected Things When You’re Expecting &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="unexpected-things-when-you-re-expecting">
+<h1>Unexpected Things When You’re Expecting<a class="headerlink" href="#unexpected-things-when-you-re-expecting" title="Permalink to this headline">¶</a></h1>
+<p>Hi everyone, I hope that you are all doing well and wishes you all good health!
+The last week has not been really kind to me with a decent amount of
+academic pressure (my school year is lasting until early Jully).
+It would be bold to say that I have spent 10 hours working on my GSoC project
+since the last check-in, let alone the 30 hours per week requirement.
+That being said, there were still some discoveries that I wish to share.</p>
+<div class="section" id="the-multiprocessing-dummy-wrapper">
+<h2>The <code class="docutils literal notranslate"><span class="pre">multiprocessing[.dummy]</span></code> wrapper<a class="headerlink" href="#the-multiprocessing-dummy-wrapper" title="Permalink to this headline">¶</a></h2>
+<p>Most of the time I spent was to finalize the multi{processing,threading}
+wrapper for <code class="docutils literal notranslate"><span class="pre">map</span></code> function that submit tasks to the worker pool.
+To my surprise, it is rather difficult to write something that is
+not only portable but also easy to read and test.</p>
+<p>By <a class="reference external" href="https://github.com/pypa/pip/pull/8320">the latest commit</a>, I realized the following:</p>
+<ol class="arabic simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> module was not designed for the implementation
+details to be abstracted away entirely.  For example, the lazy <code class="docutils literal notranslate"><span class="pre">map</span></code>’s
+could be really slow without specifying suitable chunk size
+(to cut the input iterable and distribute them to workers in the pool).
+By <em>suitable</em>, I mean only an order smaller than the input.  This defeats
+half of the purpose of making it lazy: allowing the input to be
+evaluated lazily.  Luckily, in the use case I’m aiming for, the length of
+the iterable argument is small and the laziness is only needed for the output
+(to pipeline download and installation).</p></li>
+<li><p>Mocking <code class="docutils literal notranslate"><span class="pre">import</span></code> for testing purposes can never be pretty.  One reason
+is that we (Python users) have very little control over the calls of
+<code class="docutils literal notranslate"><span class="pre">import</span></code> statements and its lower-level implementation <code class="docutils literal notranslate"><span class="pre">__import__</span></code>.
+In order to properly patch this built-in function, unlike for others
+of the same group, we have to <code class="docutils literal notranslate"><span class="pre">monkeypatch</span></code> the name from <code class="docutils literal notranslate"><span class="pre">builtins</span></code>
+(or <code class="docutils literal notranslate"><span class="pre">__builtins__</span></code> under Python 2) instead of the module that import stuff.
+Furthermore, because of the special namespacing, to avoid infinite recursion
+we need to alias the function to a different name for fallback.</p></li>
+<li><p>To add to the problem, <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> lazily imports the fragile module
+during pools creation.  Since the failure is platform-specific
+(the lack of <code class="docutils literal notranslate"><span class="pre">sem_open</span></code>), it was decided to check upon the import
+of the <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s module.  Although the behavior is easier to reason
+in human language, testing it requires invalidating cached import and
+re-import the wrapper module.</p></li>
+<li><p>Last but not least, I now understand the pain of keeping Python 2
+compatibility that many package maintainers still need to deal with
+everyday (although Python 2 has reached its end-of-life, <code class="docutils literal notranslate"><span class="pre">pip</span></code>, for
+example, <a class="reference external" href="https://github.com/pypa/pip/pull/6148">will still support it for another year</a>).</p></li>
+</ol>
+</div>
+<div class="section" id="the-change-in-direction">
+<h2>The change in direction<a class="headerlink" href="#the-change-in-direction" title="Permalink to this headline">¶</a></h2>
+<p>Since last week, my mentor Pradyun Gedam and I set up weekly real-time
+meeting (a fancy term for video/audio chat in the worldwide quarantine
+era) for the entire GSoC period. During the last session, we decided to
+put parallelization of download during resolution on hold, in favor of a
+more beneficial goal: <a class="reference external" href="https://github.com/pypa/pip/pull/7819">partially download the wheels during
+dependency resolution</a>.</p>
+<img alt="../_images/swirl.png" src="../_images/swirl.png" />
+<p>As discussed by Danny McClanahan and the maintainers of <code class="docutils literal notranslate"><span class="pre">pip</span></code>, it is feasible
+to only download a few kB of a wheel to obtain enough metadata for
+the resolution of dependency.  While this is only applicable to wheels
+(i.e. prebuilt packages), other packaging format only make up less than 20%
+of the downloads (at least on PyPI), and the figure is much less for
+the most popular packages.  Therefore, this optimization alone could make
+<a class="reference external" href="http://www.ei8fdb.org/thoughts/2020/05/test-pips-alpha-resolver-and-help-us-document-dependency-conflicts/">the upcoming backtracking resolver</a>’s performance par with the legacy one.</p>
+<p>During the last few years, there has been a lot of effort being poured into
+replacing <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s current resolver that is unable to resolve conflicts.
+While its correctness will be ensured by some of the most talented and
+hard-working developers in the Python packaging community, from the users’
+point of view, it would be better to have its performance not lagging
+behind the old one.  Aside from the increase in CPU cycles for more
+rigorous resolution, more I/O, especially networking operations is expected
+to be performed.  This is due to <a class="reference external" href="https://github.com/pypa/pip/pull/7406#issuecomment-583891169">the lack of a standard and efficient way
+to acquire the metadata</a>.  Therefore, unlike
+most package managers we are familiar with, <code class="docutils literal notranslate"><span class="pre">pip</span></code> has to fetch
+(and possibly build) the packages solely for dependency informations.</p>
+<p>Fortunately, <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0427#recommended-archiver-features"><strong>PEP 427#recommended-archiver-features</strong></a> recommends
+package builders to place the metadata at the end of the archive.
+This allows the resolver to only fetch the last few kB using
+<a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests">HTTP range requests</a> for the relevant information.
+Simply appending <code class="docutils literal notranslate"><span class="pre">Range:</span> <span class="pre">bytes=-8000</span></code> to the request header
+in <code class="docutils literal notranslate"><span class="pre">pip._internal.network.download</span></code> makes the resolution process
+<em>lightning</em> fast.  Of course this breaks the installation but I am confident
+that it is not difficult to implement this optimization cleanly.</p>
+<p>One drawback of this optimization is the compatibility.  Not every Python
+package index support range requests, and it is not possible to verify
+the partial wheel.  While the first case is unavoidable, for the other,
+hashes checking is usually used for pinned/locked-version requirements,
+thus no backtracking is done during dependency resolution.</p>
+<p>Either way, before installation, the packages selected by the resolver
+can be downloaded in parallel.  This warranties a larger crowd of packages,
+compared to parallelization during resolution, where the number of downloads
+can be as low as one during trail of different versions of the same package.</p>
+<p>Unfortunately, I have not been able to do much other than
+<a class="reference external" href="https://github.com/pypa/pip/pull/8411">a minor clean up</a>.  I am looking forward to accomplishing more
+this week and seeing what this path will lead us too!  At the moment,
+I am happy that I’m able to meet the blog deadline, at least in UTC!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200609.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

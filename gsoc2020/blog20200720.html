@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I’ve Walked 500 Miles… &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="i-ve-walked-500-miles">
+<h1>I’ve Walked 500 Miles…<a class="headerlink" href="#i-ve-walked-500-miles" title="Permalink to this headline">¶</a></h1>
+<blockquote class="epigraph">
+<div><div class="line-block">
+<div class="line">… and I would walk 500 more</div>
+<div class="line">Just to be the man who walks a thousand miles</div>
+<div class="line">To fall down at your door</div>
+</div>
+</div></blockquote>
+<img alt="../_images/500-miles.gif" src="../_images/500-miles.gif" />
+<div class="section" id="the-main-road">
+<h2>The Main Road<a class="headerlink" href="#the-main-road" title="Permalink to this headline">¶</a></h2>
+<p>Hi, have you met <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code>?  It’s (going to be) the name of <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s
+experimental feature that may improve the speed of dependency resolution
+of the new resolver.  By avoid downloading whole wheels to just
+obtain metadata, it is especially helpful when <code class="docutils literal notranslate"><span class="pre">pip</span></code> has to do
+heavy backtracking to resolve conflicts.</p>
+<p>Thanks to <a class="reference external" href="https://github.com/pypa/pip/pull/8532#discussion_r453990728">Chris Hunt’s review on GH-8537</a>,
+my mentor Pradyun Gedam and I worked out a less hacky approach to inteject
+the call to lazy wheel during the resolution process.  A new PR <a class="reference external" href="https://github.com/pypa/pip/pull/8588">GH-8588</a>
+was filed to implement it—I could have <em>just</em> worked on top of the old PR
+and rebased, but my <code class="docutils literal notranslate"><span class="pre">git</span></code> skill is far from gud enough to confidently do it.</p>
+<p>Testing this one has been a lot of fun though.  At first, integration tests
+were added as a rerun of the tests for the new resolver, with an additional flag
+to use feature <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code>.  It indeed made me feel guilty towards <a class="reference external" href="https://travis-ci.com/">Travis</a>,
+who has to work around 30 minutes more every run. Per Chris Hunt’s suggestion,
+in the new PR, I instead write a few functional tests for the area relating
+the most to the feature, namely <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s subcommands <code class="docutils literal notranslate"><span class="pre">wheel</span></code>,
+<code class="docutils literal notranslate"><span class="pre">download</span></code> and <code class="docutils literal notranslate"><span class="pre">install</span></code>.</p>
+<p>It was also suggested that a mock server with HTTP range requests support
+might be better (in term of performance and reliablilty) than for testing.
+However, <a class="reference external" href="https://github.com/pypa/pip/pull/8584#issuecomment-659227702">I have yet to be able to make Werkzeug do it</a>.</p>
+<p>Why did I say I’m half way there?  With the parallel utilities merged and a way
+to quickly get the list of distribution to be downloaded being really close,
+what left is <em>only</em> to figure out a way to properly download them in parallel.
+With no distribution to be added during the download progress, the model of this
+will fit very well with the architecture in <a class="reference external" href="https://blogs.python-gsoc.org/media/proposals/pip-parallel-dl.pdf">my original proposal</a>.
+A batch downloader can be implemented to track the progress of each download
+and thus report them cleanly as e.g. progress bar or percentage. This is
+the part I am second-most excited about of my GSoC project this summer
+(after the synchronization of downloads written in my proposal, which was then
+superseded by <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code>) and I can’t wait to do it!</p>
+</div>
+<div class="section" id="the-side-quests">
+<h2>The Side Quests<a class="headerlink" href="#the-side-quests" title="Permalink to this headline">¶</a></h2>
+<p>As usual, I make sure that I complete every side quest I see during the journey:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8568">GH-8568</a>: Declare constants in <code class="docutils literal notranslate"><span class="pre">configuration.py</span></code> as such</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8571">GH-8571</a>: Clean up <code class="docutils literal notranslate"><span class="pre">Configuration.unset_value</span></code>
+and nit the class’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8578">GH-8578</a>: Allow verbose/quite level
+to be specified via config file and env var</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8599">GH-8599</a>: Replace tabs by spaces for consistency</p></li>
+</ul>
+</div>
+<div class="section" id="snap-back-to-reality">
+<h2>Snap Back to Reality<a class="headerlink" href="#snap-back-to-reality" title="Permalink to this headline">¶</a></h2>
+<p>A bit about me, I actually walked 500 meters earlier today to a bank
+and walked 500 more to another to prepare my Visa card for purchasing
+the upcoming Pinephone prototype.  It’s one of the first smartphones
+to fully support a GNU/Linux distribution, where one can run desktop apps
+(including proper terminals) as well as traditional services like SSH,
+HTTP server and IPFS node because why not?  Just a few hours ago,
+I pre-ordered the <a class="reference external" href="https://postmarketos.org/blog/2020/07/15/pinephone-ce-preorder/">postmarketOS community edition</a> with additional hardware
+for convergence.</p>
+<p>If you did not come here for a Pinephone ad, please take my apologies though d-;
+and to ones reading this, I hope you all can become the person who walks
+a thousand miles to fall down at the door opening to all
+what you ever wished for!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200720.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

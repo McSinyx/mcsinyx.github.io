@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Wonderful Wizard of O’zip &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="the-wonderful-wizard-of-o-zip">
+<h1>The Wonderful Wizard of O’zip<a class="headerlink" href="#the-wonderful-wizard-of-o-zip" title="Permalink to this headline">¶</a></h1>
+<p><em>Never give up… No one knows what’s going to happen next.</em></p>
+<div class="section" id="preface">
+<h2>Preface<a class="headerlink" href="#preface" title="Permalink to this headline">¶</a></h2>
+<p>Greetings and best wishes!  I had a lot of fun during the last week,
+although admittedly nothing was really finished.  In summary,
+these are the works I carried out in the last seven days:</p>
+<ul class="simple">
+<li><p>Finilizing <a class="reference external" href="https://github.com/pypa/pip/pull/8320">utilities for parallelization</a></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8467">Continuing experimenting</a>
+on <a class="reference external" href="https://github.com/pypa/pip/pull/8442">using lazy wheels or dependency resolution</a></p></li>
+<li><p>Polishing up <a class="reference external" href="https://github.com/pypa/pip/pull/8411">the patch</a> refactoring
+<code class="docutils literal notranslate"><span class="pre">operations.prepare.prepare_linked_requirement</span></code></p></li>
+<li><p>Adding <code class="docutils literal notranslate"><span class="pre">flake8-logging-format</span></code>
+<a class="reference external" href="https://github.com/pypa/pip/pull/8423#issuecomment-645418725">to the linter</a></p></li>
+<li><p>Splitting <a class="reference external" href="https://github.com/pypa/pip/pull/8456">the linting patch</a> from <a class="reference external" href="https://github.com/pypa/pip/pull/8332">the PR adding
+the license requirement to vendor README</a></p></li>
+</ul>
+</div>
+<div class="section" id="the-multiprocessing-dummy-wrapper">
+<h2>The <code class="docutils literal notranslate"><span class="pre">multiprocessing[.dummy]</span></code> wrapper<a class="headerlink" href="#the-multiprocessing-dummy-wrapper" title="Permalink to this headline">¶</a></h2>
+<p>Yes, you read it right, this is the same section as last fortnight’s blog.
+My mentor Pradyun Gedam gave me a green light to have <a class="reference external" href="https://github.com/pypa/pip/pull/8411">GH-8411</a> merged
+without support for Python 2 and the non-lazy map variant, which turns out
+to be troublesome for multithreading.</p>
+<p>The tests still needs to pass of course and the flaky tests (see failing tests
+over Azure Pipeline in the past) really gave me a panic attack earlier today.
+We probably need to mark them as xfail or investigate why they are
+undeterministic specifically on Azure, but the real reason I was <em>all caught up
+and confused</em> was that the unit tests I added mess with the cached imports
+and as <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s tests are run in parallel, who knows what it might affect.
+I was so relieved to not discover any new set of tests made flaky by ones
+I’m trying to add!</p>
+</div>
+<div class="section" id="the-file-like-object-mapping-zip-over-http">
+<h2>The file-like object mapping ZIP over HTTP<a class="headerlink" href="#the-file-like-object-mapping-zip-over-http" title="Permalink to this headline">¶</a></h2>
+<p>This is where the fun starts.  Before we dive in, let’s recall some
+background information on this.  As discovered by Danny McClanahan
+in <a class="reference external" href="https://github.com/pypa/pip/pull/7819">GH-7819</a>, it is possible to only download a potion of a wheel
+and it’s still valid for <code class="docutils literal notranslate"><span class="pre">pip</span></code> to get the distribution’s metadata.
+In the same thread, Daniel Holth suggested that one may use
+HTTP range requests to specifically ask for the tail of the wheel,
+where the ZIP’s central directory record as well as where usually
+<code class="docutils literal notranslate"><span class="pre">dist-info</span></code> (the directory containing <code class="docutils literal notranslate"><span class="pre">METADATA</span></code>) can be found.</p>
+<p>Well, <em>usually</em>.  While <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0427"><strong>PEP 427</strong></a> does indeed recommend</p>
+<blockquote>
+<div><p>Archivers are encouraged to place the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> files physically
+at the end of the archive.  This enables some potentially interesting
+ZIP tricks including the ability to amend the metadata without
+rewriting the entire archive.</p>
+</div></blockquote>
+<p>one of the mentioned <em>tricks</em> is adding shared libraries to wheels
+of extension modules (using e.g. <code class="docutils literal notranslate"><span class="pre">auditwheel</span></code> or <code class="docutils literal notranslate"><span class="pre">delocate</span></code>).
+Thus for non-pure Python wheels, it is unlikely that the metadata
+lie in the last few megabytes.  Ignoring source distributions is bad enough,
+we can’t afford making an optimization that doesn’t work for extension modules,
+which are still an integral part of the Python ecosystem )-:</p>
+<p>But hey, the ZIP’s directory record is warrantied to be at the end of the file!
+Couldn’t we do something about that?  The short answer is yes.  The long answer
+is, well, yessssssss! That, plus magic provided by most operating systems,
+this is what we figured out:</p>
+<ol class="arabic">
+<li><p>We can download a realatively small chunk at the end of the wheel
+until it is recognizable as a valid ZIP file.</p></li>
+<li><p>In order for the end of the archive to actually appear as the end to
+<code class="docutils literal notranslate"><span class="pre">zipfile</span></code>, we feed to it an object with <code class="docutils literal notranslate"><span class="pre">seek</span></code> and <code class="docutils literal notranslate"><span class="pre">read</span></code> defined.
+As navigating to the rear of the file is performed by calling <code class="docutils literal notranslate"><span class="pre">seek</span></code>
+with relative offset and <code class="docutils literal notranslate"><span class="pre">whence=SEEK_END</span></code> (see <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">3</span> <span class="pre">fseek</span></code>
+for more details), we are completely able to make the wheels in the cloud
+to behave as if it were available locally.</p>
+<img alt="../_images/cloud.gif" src="../_images/cloud.gif" />
+</li>
+<li><p>For large wheels, it is better to store them in hard disks instead of memory.
+For smaller ones, it is also preferable to store it as a file to avoid
+(error-prony and often not really efficient) manual tracking and joining
+of downloaded segments.  We only use a small potion of the wheel, however
+just in case one is wonderring, we have very little control over
+when <code class="docutils literal notranslate"><span class="pre">tempfile.SpooledTemporaryFile</span></code> rolls over, so the memory-disk hybrid
+is not exactly working as expected.</p></li>
+<li><p>With all these in mind, all we have to do is to define an intermediate object
+check for local availability and download if needed on calls to <code class="docutils literal notranslate"><span class="pre">read</span></code>,
+to lazily provide the data over HTTP and reduce execution time.</p></li>
+</ol>
+<p>The only theoretical challenge left is to keep track of downloaded intervals,
+which I finally figured out after a few trials and errors.  The code
+was submitted as a pull request to <code class="docutils literal notranslate"><span class="pre">pip</span></code> at <a class="reference external" href="https://github.com/pypa/pip/pull/8467">GH-8467</a>.  A more modern
+(read: Python 3-only) variant was packaged and uploaded to PyPI under
+the name of <a class="reference external" href="https://pypi.org/project/lazip/">lazip</a>.  I am unaware of any use case for it outside of <code class="docutils literal notranslate"><span class="pre">pip</span></code>,
+but it’s certainly fun to play with d-:</p>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>I have been falling short of getting the PRs mention above merged for
+quite a while.  With <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s next beta coming really soon, I have to somehow
+make the patches reach a certain standard and enough attention to be part of
+the pre-release—beta-testing would greatly help the success of the GSoC project.
+To other GSoC students and mentors reading this, I also hope your projects
+to turn out successful!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200622.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

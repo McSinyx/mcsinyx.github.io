@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fourth Check-In &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="fourth-check-in">
+<h1>Fourth Check-In<a class="headerlink" href="#fourth-check-in" title="Permalink to this headline">¶</a></h1>
+<p>Hello there! I’m having my second year’s last exam tomorrow,
+but it <a class="reference external" href="https://www.youtube.com/watch?v=F1B9Fk_SgI0">feels like summer</a> already!  I’ve been finalizing quite a few things
+to get them ready for pip 20.2b2.</p>
+<div class="section" id="what-did-i-do-last-week">
+<h2>What did I do last week?<a class="headerlink" href="#what-did-i-do-last-week" title="Permalink to this headline">¶</a></h2>
+<p>I’ve spent most of the time on getting <a class="reference external" href="https://github.com/pypa/pip/pull/8532">the opt-in</a> for obtaining
+dependency information via lazy wheels ready.  It will be available as
+<code class="docutils literal notranslate"><span class="pre">--use-feature=fast-deps</span></code> and only has effect when
+<code class="docutils literal notranslate"><span class="pre">--use-feature=2020-resolver</span></code> also presents.</p>
+<p>While waiting for reviews and suggestions, I made some patches for
+internal cleansing, namely <a class="reference external" href="https://github.com/pypa/pip/pull/8568">GH-8568</a>, <a class="reference external" href="https://github.com/pypa/pip/pull/8571">GH-8571</a> and <a class="reference external" href="https://github.com/pypa/pip/pull/8578">GH-8578</a>.
+Some of the similar patches I made earlier were also merged last week:
+<a class="reference external" href="https://github.com/pypa/pip/pull/8456">GH-8456</a> and <a class="reference external" href="https://github.com/pypa/pip/pull/8538">GH-8538</a>.</p>
+</div>
+<div class="section" id="did-i-get-stuck-anywhere">
+<h2>Did I get stuck anywhere?<a class="headerlink" href="#did-i-get-stuck-anywhere" title="Permalink to this headline">¶</a></h2>
+<p>Not really, everything was going as expected for me.</p>
+</div>
+<div class="section" id="what-is-coming-up-next">
+<h2>What is coming up next?<a class="headerlink" href="#what-is-coming-up-next" title="Permalink to this headline">¶</a></h2>
+<p>After <a class="reference external" href="https://github.com/pypa/pip/pull/8532">GH-8532</a>, I’ll work on the parallel download of the postponed wheels.
+My main current concern is with how the download progress will be reported
+to the users, but I think I’ll figure it out soon.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/checkin20200713.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

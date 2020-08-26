@@ -1,0 +1,47 @@
+Parallelizing Wheel Downloads
+=============================
+
+.. epigraph::
+
+   | And now it's clear as this promise
+   | That we're making
+   | Two progress bars into one
+
+Hello there! It has been raining a lot lately and some mosquito has given me
+the Dengue fever today.  To whoever reading this, I hope it would never happen
+to you.
+
+Download Parallelization
+------------------------
+
+I've been working on ``pip``'s download parallelization for quite a while now.
+As distribution download in ``pip`` was modeled as a lazily evaluated iterable
+of chunks, parallelizing such procedure is as simple as submitting routines
+that write files to disk to a worker pool.
+
+Or at least that is what I thought.
+
+Progress Reporting UI
+---------------------
+
+``pip`` is currently using customly defined progress reporting classes,
+which was not designed to working with multithreading code.  Firstly, I want to
+try using these instead of defining separate UI for multithreaded progresses.
+As they use system signals for termination, one must the progress bars has to be
+running the main thread.  Or sort of.
+
+Since the progress bars are designed as iterators, I realized that we
+can call ``next`` on them.  So quickly, I throw in some queues and locks,
+and prototyped the first *working* :pip:`implementation of
+progress synchronization <8771>`.
+
+Performance Issues
+------------------
+
+Welp, I only said that it works, but I didn't mention the performance,
+which is terrible.  I am pretty sure that the slow down is with
+the synchronization, since the ``map_multithread`` call doesn't seem
+to trigger anything that may introduce any sort of blocking.
+
+This seems like a lot of fun, and I hope I'll get better tomorrow
+to continue playing with it!
