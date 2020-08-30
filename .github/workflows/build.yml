@@ -2,18 +2,21 @@ name: build
 
 on:
   push:
+    branches:
+    - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.9.0-beta.4 - 3.9.0
+
+    - name: Check out
+      uses: actions/checkout@v2
 
     - name: Build Site
       run: |
