@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outro &#8212; Raphael McSinyx</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fab.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/CnX.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">/home/cnx</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../works.html">Free Software Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../meat/index.html">Meatspace Adventures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math/index.html">Bootleg Lambda Calculus</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="outro">
+<h1>Outro<a class="headerlink" href="#outro" title="Permalink to this headline">¶</a></h1>
+<blockquote class="epigraph">
+<div><div class="line-block">
+<div class="line">Steamed fish was amazing, matter of fact</div>
+<div class="line">Let me get some jerk chicken to go</div>
+<div class="line">Grabbed me one of them lemon pie theories</div>
+<div class="line">And let me get some of them benchmarks you theories too</div>
+</div>
+</div></blockquote>
+<div class="section" id="the-look">
+<h2>The Look<a class="headerlink" href="#the-look" title="Permalink to this headline">¶</a></h2>
+<p>At the time of writing,
+<a class="reference external" href="https://github.com/pypa/pip/pull/8771">implementation-wise parallel download is ready</a>:</p>
+<script id="asciicast-356704" src="https://asciinema.org/a/356704.js"
+        async></script><p>Does this mean I’ve finished everything just-in-time?  This sounds to good
+to be true!  And how does it perform?  Welp…</p>
+</div>
+<div class="section" id="the-benchmark">
+<span id="benchmark"></span><h2>The Benchmark<a class="headerlink" href="#the-benchmark" title="Permalink to this headline">¶</a></h2>
+<p>Here comes the bad news: under a decent connection to the package index,
+using <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code> does not make <code class="docutils literal notranslate"><span class="pre">pip</span></code> faster.  For best comparison,
+I will time <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">download</span></code> on the following cases:</p>
+<div class="section" id="average-distribution">
+<h3>Average Distribution<a class="headerlink" href="#average-distribution" title="Permalink to this headline">¶</a></h3>
+<p>For convenience purposes, let’s refer to the commands to be used as follows</p>
+<dl class="simple">
+<dt>legacy-resolver</dt><dd><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">--no-cache-dir</span> <span class="pre">download</span> <span class="pre">{requirement}</span></code></p>
+</dd>
+<dt>2020-resolver</dt><dd><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">--use-feature=2020-resolver</span> <span class="pre">--no-cache-dir</span> <span class="pre">download</span> <span class="pre">{requirement}</span></code></p>
+</dd>
+<dt>fast-deps</dt><dd><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">--use-feature=2020-resolver</span> <span class="pre">--use-feature=fast-deps</span>
+<span class="pre">--no-cache-dir</span> <span class="pre">download</span> <span class="pre">{requirement}</span></code></p>
+</dd>
+</dl>
+<p>In the first test, I used <a class="reference external" href="https://www.youtube.com/playlist?list=PLAA9fHINq3sayfxEyZSF2D_rMgDZGyL3N">axuy</a> and obtained the following results</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 35%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>legacy-resolver</p></th>
+<th class="head"><p>2020-resolver</p></th>
+<th class="head"><p>fast-deps</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>7.709s</p></td>
+<td><p>7.888s</p></td>
+<td><p>10.993s</p></td>
+</tr>
+<tr class="row-odd"><td><p>7.068s</p></td>
+<td><p>7.127s</p></td>
+<td><p>11.103s</p></td>
+</tr>
+<tr class="row-even"><td><p>8.556s</p></td>
+<td><p>6.972s</p></td>
+<td><p>10.496s</p></td>
+</tr>
+</tbody>
+</table>
+<p>Funny enough, running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">download</span></code> with <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code> in a directory
+with downloaded files already took around 7-8 seconds.  This is because
+to lazily download a wheel, <code class="docutils literal notranslate"><span class="pre">pip</span></code> has to <a class="reference external" href="https://github.com/pypa/pip/pull/8670">make many requests</a>
+which are apparently more expensive than actual data transmission on my network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With unstable connection to PyPI (for some reason I am not confident enough
+to state), this is what I got</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 59%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>2020-resolver</p></th>
+<th class="head"><p>fast-deps</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1m16.134s</p></td>
+<td><p>0m54.894s</p></td>
+</tr>
+<tr class="row-odd"><td><p>1m0.384s</p></td>
+<td><p>0m40.753s</p></td>
+</tr>
+<tr class="row-even"><td><p>0m50.102s</p></td>
+<td><p>0m41.988s</p></td>
+</tr>
+</tbody>
+</table>
+<p>As the connection was <em>unstable</em> and that the majority of <code class="docutils literal notranslate"><span class="pre">pip</span></code> networking
+is performed as CI/CD with large and stable bandwidth, I am unsure what this
+result is supposed to tell (-;</p>
+</div>
+</div>
+<div class="section" id="large-distribution">
+<h3>Large Distribution<a class="headerlink" href="#large-distribution" title="Permalink to this headline">¶</a></h3>
+<p>In this test, I used <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> as the requirement and obtained
+the following figures:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 35%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>legacy-resolver</p></th>
+<th class="head"><p>2020-resolver</p></th>
+<th class="head"><p>fast-deps</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0m52.135s</p></td>
+<td><p>0m58.809s</p></td>
+<td><p>1m5.649s</p></td>
+</tr>
+<tr class="row-odd"><td><p>0m50.641s</p></td>
+<td><p>1m14.896s</p></td>
+<td><p>1m28.168s</p></td>
+</tr>
+<tr class="row-even"><td><p>0m49.691s</p></td>
+<td><p>1m5.633s</p></td>
+<td><p>1m22.131s</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="distribution-with-conflicting-dependencies">
+<h3>Distribution with Conflicting Dependencies<a class="headerlink" href="#distribution-with-conflicting-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Some requirement that will trigger a decent amount of backtracking by
+the current implementation of the new resolver <code class="docutils literal notranslate"><span class="pre">oslo-utils==1.4.0</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 59%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>2020-resolver</p></th>
+<th class="head"><p>fast-deps</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>14.497s</p></td>
+<td><p>24.010s</p></td>
+</tr>
+<tr class="row-odd"><td><p>17.680s</p></td>
+<td><p>28.884s</p></td>
+</tr>
+<tr class="row-even"><td><p>16.541s</p></td>
+<td><p>26.333s</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="what-now">
+<h2>What Now?<a class="headerlink" href="#what-now" title="Permalink to this headline">¶</a></h2>
+<p>I don’t know, to be honest.  At this point I’m feeling I’ve failed my own
+(and that of other stakeholders of <code class="docutils literal notranslate"><span class="pre">pip</span></code>) expectation and wasted the time
+and effort of <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s maintainers reviewing dozens of PRs I’ve made
+in the last three months.</p>
+<p>On the bright side, this has been an opportunity for me to explore the codebase
+of package manager and discovered various edge cases where the new resolver
+has yet to cover (e.g. I’ve just noticed that <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">download</span></code> would save
+to-be-discarded distributions, I’ll file an issue on that soon).  Plus I got
+to know many new and cool people and idea, which make me a more helpful
+individual to work on Python packaging in the future, I hope.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/gsoc2020/blog20200831.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

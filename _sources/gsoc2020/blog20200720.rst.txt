@@ -1,13 +1,13 @@
-I've Walked 500 Miles…
-======================
+I've Walked 500 Miles...
+========================
 
 .. epigraph::
 
-   | … and I would walk 500 more
+   | ... and I would walk 500 more
    | Just to be the man who walks a thousand miles
    | To fall down at your door
 
-.. image:: 500-miles.gif
+   .. image:: 500-miles.gif
 
 The Main Road
 -------------

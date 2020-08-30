@@ -83,6 +83,129 @@
             
   <div class="section" id="google-summer-of-code-2020">
 <h1>Google Summer of Code 2020<a class="headerlink" href="#google-summer-of-code-2020" title="Permalink to this headline">¶</a></h1>
+<p>In the summer of 2020, I worked with the contributors of <code class="docutils literal notranslate"><span class="pre">pip</span></code>, trying
+to improve the networking performance of the package manager.  Admittedly,
+at the end of the <a class="reference external" href="https://summerofcode.withgoogle.com/projects/#5428041779511296">internship</a> period, <a class="reference internal" href="blog20200831.html#benchmark"><span class="std std-ref">the benchmark said otherwise</span></a>; though I really hope the clean-up and minor fixes
+I happened to be doing to the codebase over the summer, in addition
+to the implementation of parallel utils and lazy wheel, might actually
+help the project.</p>
+<p>Personally, I learned a lot: not just about Python packaging and
+networking stuff, but also on how to work with others.  I am really
+grateful to <a class="reference external" href="https://github.com/pradyunsg">&#64;pradyunsg</a> (my mentor), <a class="reference external" href="https://github.com/chrahunt">&#64;chrahunt</a>,
+<a class="reference external" href="https://github.com/uranusjr">&#64;uranusjr</a>, <a class="reference external" href="https://github.com/pfmoore">&#64;pfmoore</a>, <a class="reference external" href="https://github.com/brainwane">&#64;brainwane</a>, <a class="reference external" href="https://github.com/sbidoul">&#64;sbidoul</a>,
+<a class="reference external" href="https://github.com/xavfernandez">&#64;xavfernandez</a>, <a class="reference external" href="https://github.com/webknjaz">&#64;webknjaz</a>, <a class="reference external" href="https://github.com/jaraco">&#64;jaraco</a>,
+<a class="reference external" href="https://github.com/deveshks">&#64;deveshks</a>, <a class="reference external" href="https://github.com/gutsytechster">&#64;gutsytechster</a>, <a class="reference external" href="https://github.com/dholth">&#64;dholth</a>,
+<a class="reference external" href="https://github.com/dstufft">&#64;dstufft</a>, <a class="reference external" href="https://github.com/cosmicexplorer">&#64;cosmicexplorer</a> and <a class="reference external" href="https://github.com/ofek">&#64;ofek</a>.
+While this feels like a long shout-out list, it really isn’t.
+These people are the maintainers, the contributors of <code class="docutils literal notranslate"><span class="pre">pip</span></code> and/or
+other Python packaging projects, and more importantly, they have been more than
+helpful, encouraging and patient to me throughout my every activities,
+showing me the way when I was lost, fixing me when I was wrong, putting up with
+my carelessness and showing me support across different social media.</p>
+<p>To best serve the community, below I have tried my best to document
+what I have done, how I’ve done it and why I’ve done it for over
+the last three months.  At the time of writing, some work is still in progress,
+so these also serve as a reference point for myself and others to reason
+about decisions in relevant topics.</p>
+<div class="section" id="the-main-story">
+<h2>The Main Story<a class="headerlink" href="#the-main-story" title="Permalink to this headline">¶</a></h2>
+<p>The storyline can be divided into the following four main acts.</p>
+<div class="section" id="act-one-parallelization-utilities">
+<h3>Act One: Parallelization Utilities<a class="headerlink" href="#act-one-parallelization-utilities" title="Permalink to this headline">¶</a></h3>
+<p>In this first act, I ensured the portibility of parallelization
+measures for later use in the final act.  Multithreading and multiprocessing
+<code class="docutils literal notranslate"><span class="pre">map</span></code> were properly fellback on platforms without full support.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8320">GH-8320</a>: Add utilities for parallelization (close <a class="reference external" href="https://github.com/pypa/pip/pull/8169">GH-8169</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8538">GH-8538</a>: Make <code class="docutils literal notranslate"><span class="pre">utils.parallel</span></code> tests tear down properly</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8504">GH-8504</a>: Parallelize <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span> <span class="pre">--outdated</span></code> and <code class="docutils literal notranslate"><span class="pre">--uptodate</span></code>
+(using <a class="reference external" href="https://github.com/pypa/pip/pull/8320">GH-8320</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="act-two-lazy-wheels">
+<h3>Act Two: Lazy Wheels<a class="headerlink" href="#act-two-lazy-wheels" title="Permalink to this headline">¶</a></h3>
+<p>As proposed by <a class="reference external" href="https://github.com/cosmicexplorer">&#64;cosmicexplorer</a> in <a class="reference external" href="https://github.com/pypa/pip/pull/7819">GH-7819</a>, it is possible to only
+download a portion of a wheel to obtain metadata during dependency resolution.
+Not only that this would reduce the total amount of data to be transmitted over
+the network in case the resolver needs to perform heavy backtracking, but also
+it would create a synchronization point at the end of the resolution progress
+where parallel downloading can be applied to the needed wheels (some wheels
+solely serve their metadata during dependency backtracking and are not needed
+by the users).</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8467">GH-8467</a>: Add utitlity to lazily acquire wheel metadata over HTTP</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8584">GH-8584</a>: Revise lazy wheel and its tests</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8681">GH-8681</a>: Make range requests closer to chunk size (help <a class="reference external" href="https://github.com/pypa/pip/pull/8670">GH-8670</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8716">GH-8716</a> and <a class="reference external" href="https://github.com/pypa/pip/pull/8730">GH-8730</a>: Disable caching for range requests</p></li>
+</ul>
+</div>
+<div class="section" id="act-three-late-downloading">
+<h3>Act Three: Late Downloading<a class="headerlink" href="#act-three-late-downloading" title="Permalink to this headline">¶</a></h3>
+<p>During this act, the main works were refactoring to integrate the <em>lazy wheel</em>
+into <code class="docutils literal notranslate"><span class="pre">pip</span></code>’s codebase and clean up the way for download parallelization.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8411">GH-8411</a>: Refactor <code class="docutils literal notranslate"><span class="pre">operations.prepare.prepare_linked_requirement</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8629">GH-8629</a>: Abstract away <code class="docutils literal notranslate"><span class="pre">AbstractDistribution</span></code>
+in higher-level resolver code</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8442">GH-8442</a>, <a class="reference external" href="https://github.com/pypa/pip/pull/8532">GH-8532</a> and <a class="reference external" href="https://github.com/pypa/pip/pull/8588">GH-8588</a> (later reworked by <a class="reference external" href="https://github.com/chrahunt">&#64;chrahunt</a>
+in <a class="reference external" href="https://github.com/pypa/pip/pull/8685">GH-8685</a>): Use lazy wheel to obtain dependency information
+for the new resolver</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8743">GH-8743</a>: Test hash checking for <code class="docutils literal notranslate"><span class="pre">fast-deps</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8804">GH-8804</a>: Check download directory before making range requests</p></li>
+</ul>
+</div>
+<div class="section" id="act-four-batch-downloading-in-parallel">
+<h3>Act Four: Batch Downloading in Parallel<a class="headerlink" href="#act-four-batch-downloading-in-parallel" title="Permalink to this headline">¶</a></h3>
+<p>The final act is mostly about the UI of the parallel download.
+My work involved around how the progress should be displayed
+and how other relevant information should be reported to the users.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8710">GH-8710</a>: Revise method fetching metadata using lazy wheels</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8722">GH-8722</a>: Dedent late download logs (fix <a class="reference external" href="https://github.com/pypa/pip/pull/8721">GH-8721</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8737">GH-8737</a>: Add a hook for batch downloading</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8771">GH-8771</a>: Parallelize wheel download</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-side-quests">
+<h2>The Side Quests<a class="headerlink" href="#the-side-quests" title="Permalink to this headline">¶</a></h2>
+<p>In order to keep the wheel turning (no pun intended) and avoid wasting time
+waiting for the pull requests above to be reviewed, I decided to create
+even more PRs (as I am typing this, many of the patches listed below
+are nowhere near being merged).</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/7878">GH-7878</a>: Fail early when install path is not writable</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/7928">GH-7928</a>: Fix rst syntax in Getting Started guide</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/7988">GH-7988</a>: Fix tabulate col size in case of empty cell</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8137">GH-8137</a>: Add subcommand alias mechanism</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8143">GH-8143</a>: Make mypy happy with beta release automation</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8248">GH-8248</a>: Fix typo and simplify ireq call</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8332">GH-8332</a>: Add license requirement to <code class="docutils literal notranslate"><span class="pre">_vendor/README.rst</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8423">GH-8423</a>: Nitpick logging calls</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8435">GH-8435</a>: Use str.format style in logging calls</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8456">GH-8456</a>: Lint <code class="docutils literal notranslate"><span class="pre">src/pip/_vendor/README.rst</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8568">GH-8568</a>: Declare constants in configuration.py as such</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8571">GH-8571</a>: Clean up <code class="docutils literal notranslate"><span class="pre">Configuration.unset_value</span></code> and nit <code class="docutils literal notranslate"><span class="pre">__init__</span></code></p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8578">GH-8578</a>: Allow verbose/quiet level to be specified
+via config files and environment variables</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8599">GH-8599</a>: Replace tabs by spaces for consistency</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8614">GH-8614</a>: Use <code class="docutils literal notranslate"><span class="pre">monkeypatch.setenv</span></code> to mock environment variables</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8674">GH-8674</a>: Fix <code class="docutils literal notranslate"><span class="pre">tests/functional/test_install_check.py</span></code>,
+when run with new resolver</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8692">GH-8692</a>: Make assertion failure give better message</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8709">GH-8709</a>: List downloaded distributions before exiting (fix <a class="reference external" href="https://github.com/pypa/pip/pull/8696">GH-8696</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8759">GH-8759</a>: Allow py2 deprecation warning from setuptools</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8766">GH-8766</a>: Use the new resolver for test requirements</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8790">GH-8790</a>: Mark tests using remote svn and hg as xfail</p></li>
+<li><p><a class="reference external" href="https://github.com/pypa/pip/pull/8795">GH-8795</a>: Reformat a few spots in user guide</p></li>
+</ul>
+</div>
+<div class="section" id="the-plot-summary">
+<h2>The Plot Summary<a class="headerlink" href="#the-plot-summary" title="Permalink to this headline">¶</a></h2>
+<p>Every Monday throughout the Summer of Code, I summarized what I had done
+in the week before in the form of either a short blog or an (even shorter)
+check-in.  These write-ups often contain handfuls of popular culture references
+and was originally hosted on <a class="reference external" href="https://blogs.python-gsoc.org/en/mcsinyxs-blog/">Python GSoC</a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="checkin20200601.html">First Check-In</a></li>
@@ -98,7 +221,9 @@
 <li class="toctree-l1"><a class="reference internal" href="checkin20200810.html">Sixth Check-In</a></li>
 <li class="toctree-l1"><a class="reference internal" href="blog20200817.html">Parallelizing Wheel Downloads</a></li>
 <li class="toctree-l1"><a class="reference internal" href="checkin20200824.html">Final Check-In</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog20200831.html">Outro</a></li>
 </ul>
+</div>
 </div>
 </div>
 

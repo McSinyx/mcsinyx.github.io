@@ -1,7 +1,9 @@
 The Wonderful Wizard of O'zip
 =============================
 
-*Never give up… No one knows what's going to happen next.*
+.. epigraph::
+
+   Never give up... No one knows what's going to happen next.
 
 Preface
 -------
