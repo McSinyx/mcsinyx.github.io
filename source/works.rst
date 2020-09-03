@@ -4,6 +4,34 @@ Free Software Works
 Applications
 ------------
 
+comp
+^^^^
+
+comp__ is a mpv__ front-end using curses.
+
+.. image::
+   https://git.disroot.org/McSinyx/comp/raw/branch/bachelor/doc/screenshot.png
+
+It has basic media player functions and can to extract playlists
+from multiple sources such as media sites supported by youtube-dl__,
+local and direct URL to video/audio and its own JSON playlist format.
+
+__ https://pypi.org/project/comp/
+__ https://mpv.io/
+__ https://ytdl-org.github.io/youtube-dl/
+
+pip
+^^^
+
+pip__ is a package manager for Python.  `Summer 2020 <gsoc2020>`_,
+I worked as an intern trying improve its new resolver's networking performance.
+The final result was not satisfying so at the time of writing I am still
+continuing the optimization works, as well as hanging around the project's
+issue tracker doing what I can do, mostly because I've grown to like its
+contributors and surprisingly hacky codebase (-;
+
+__ https://pip.pypa.io/
+
 Libraries
 ---------
 
@@ -38,8 +66,63 @@ __ https://lazip.rtfd.io/
 Video Games
 -----------
 
+Brutal Maze
+^^^^^^^^^^^
+
+`Brutal Maze`__ is a thrilling shoot ‘em up game with minimalist art style.
+
+.. image:: https://brutalmaze.rtfd.io/_images/screenshot.png
+   :target: https://brutalmaze.rtfd.io/recplayer.html
+
+__ https://brutalmaze.rtfd.io/
+
+The game features a trigon trapped in an infinite maze.  As our hero tries
+to escape, the maze's border turns into aggressive squares trying to stop per.
+Your job is to help the trigon fight against those evil squares and find
+a way out (if there is any).  Be aware that the more get killed,
+the more will show up and our hero will get weaker when wounded.
+
+Axuy
+^^^^
+
+Axuy__ is a mininalist peer-to-peer first-person shooter.
+
+.. image:: https://user-images.githubusercontent.com/13689192/85820832-57455280-b7a1-11ea-84c5-b049abfc2098.png
+
+It is a WIP game for me to experiment with various concepts
+in P2P networking as well as 3D game development.
+
+__ https://www.youtube.com/playlist?list=PLAA9fHINq3sayfxEyZSF2D_rMgDZGyL3N
+
+Slacker
+^^^^^^^
+
+Slacker__ is a clone/parody of the popular arcade game Stacker__.
+
+__ https://pypi.org/project/slacker-game/
+__ https://en.wikipedia.org/wiki/Stacker_(arcade_game)
+
 Plugins
 -------
+
+Alful
+^^^^^
+
+Alful__ is a six-line extension making Firefox Quantum open all windows
+in fullscreen to hide the toolbars in windowed mode
+(``full-screen-api.ignore-widgets = true``).  All credits go to tazeat,
+who wrote the original version and suggested the change
+`to achieve the current behavior`__.
+
+__ https://addons.mozilla.org/en-US/firefox/addon/alful/
+__ https://github.com/tazeat/AutoFullscreen/issues/4#issuecomment-509723353
+
+vim-octave
+^^^^^^^^^^
+
+I am maintaining `Octave syntax and indentation support for Vim`__.
+
+__ https://github.com/McSinyx/vim-octave
 
 Localizations
 -------------
