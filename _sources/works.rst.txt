@@ -16,9 +16,9 @@ It has basic media player functions and can to extract playlists
 from multiple sources such as media sites supported by youtube-dl__,
 local and direct URL to video/audio and its own JSON playlist format.
 
-__ https://pypi.org/project/comp/
-__ https://mpv.io/
-__ https://ytdl-org.github.io/youtube-dl/
+__ https://pypi.org/project/comp
+__ https://mpv.io
+__ https://ytdl-org.github.io/youtube-dl
 
 pip
 ^^^
@@ -30,7 +30,7 @@ continuing the optimization works, as well as hanging around the project's
 issue tracker doing what I can do, mostly because I've grown to like its
 contributors and surprisingly hacky codebase (-;
 
-__ https://pip.pypa.io/
+__ https://pip.pypa.io
 
 Libraries
 ---------
@@ -61,7 +61,7 @@ Lazip
 Lazip__ is a Python library providing a read-only file-like object
 lazily mapped to a ZIP file over HTTP via range requests.
 
-__ https://lazip.rtfd.io/
+__ https://lazip.rtfd.io
 
 Video Games
 -----------
@@ -74,7 +74,7 @@ Brutal Maze
 .. image:: https://brutalmaze.rtfd.io/_images/screenshot.png
    :target: https://brutalmaze.rtfd.io/recplayer.html
 
-__ https://brutalmaze.rtfd.io/
+__ https://brutalmaze.rtfd.io
 
 The game features a trigon trapped in an infinite maze.  As our hero tries
 to escape, the maze's border turns into aggressive squares trying to stop per.
@@ -99,11 +99,29 @@ Slacker
 
 Slacker__ is a clone/parody of the popular arcade game Stacker__.
 
-__ https://pypi.org/project/slacker-game/
+__ https://pypi.org/project/slacker-game
 __ https://en.wikipedia.org/wiki/Stacker_(arcade_game)
 
 Plugins
 -------
+
+Vicious
+^^^^^^^
+
+Vicious__ is a modular widget library for window managers, but mostly catering
+to users of the `awesome window manager`__.  It was derived from the old
+*wicked* widget library, and has some of the old *wicked* widget types,
+a few of them rewritten, and a good number of new ones.
+
+Vicious widget types are a framework for creating your own widgets.
+Vicious contains modules that gather data about your system,
+and a few *awesome* helper functions that make it easier to register timers,
+suspend widgets and so on.  Vicious doesn't depend on any third party Lua__
+library, but may depend on additional system utilities.
+
+__ https://vicious.readthedocs.io
+__ https://awesomewm.org
+__ https://www.lua.org
 
 Alful
 ^^^^^
@@ -114,7 +132,7 @@ in fullscreen to hide the toolbars in windowed mode
 who wrote the original version and suggested the change
 `to achieve the current behavior`__.
 
-__ https://addons.mozilla.org/en-US/firefox/addon/alful/
+__ https://addons.mozilla.org/en-US/firefox/addon/alful
 __ https://github.com/tazeat/AutoFullscreen/issues/4#issuecomment-509723353
 
 vim-octave
@@ -142,10 +160,10 @@ Vietnamese Translation of Flare
 
 I have translated the `Free/Libre Action Roleplaying Engine`__ (yep,
 just the engine) to Vietnamese.  The translation of the `Empyrean Campaign`__
-is work in progress |---| admittedly it does not get enough priority lately.
+is work in progress---admittedly it does not get enough priority lately.
 
-__ https://flarerpg.org/
-__ https://flarerpg.org/index.php/mods/flare-empyrean/
+__ https://flarerpg.org
+__ https://flarerpg.org/index.php/mods/flare-empyrean
 
 Themes
 ------
@@ -162,8 +180,8 @@ screenshots of the original theme on GTK+ 3.16.
 The theme was released under GPLv2+, although after the redesign
 of openDesktop.org, such information is no longer available on the website.
 
-__ https://www.opendesktop.org/p/1078597/
-__ https://www.opendesktop.org/p/1016170/
+__ https://www.opendesktop.org/p/1078597
+__ https://www.opendesktop.org/p/1016170
 __ https://blogs.gnome.org/mclasen/2014/06/13/a-new-default-theme-for-gtk/
 
 MathieWD
@@ -177,7 +195,7 @@ the active GTK+ theme.  It is inspired by elementary mathematical symbols.
 The theme was released under GPLv2+, although after the redesign of
 openDesktop.org, such information is no longer available on the website.
 
-__ https://www.opendesktop.org/p/1016294/
+__ https://www.opendesktop.org/p/1016294
 
 Miscellaneous
 ^^^^^^^^^^^^^
@@ -185,6 +203,3 @@ Miscellaneous
 Other themes and configurations are cooperated into my personal dotfiles__.
 
 __ https://git.disroot.org/McSinyx/dotfiles
-
-.. |---| unicode:: U+2014
-   :trim:
