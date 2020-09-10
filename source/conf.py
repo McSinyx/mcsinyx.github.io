@@ -26,7 +26,8 @@ exclude_patterns = []
 
 # Options for HTML output
 html_theme = 'alabaster'
-html_theme_options = {'fixed_sidebar': True}
+html_theme_options = {'fixed_sidebar': True,
+                      'donate_url': 'https://liberapay.com/McSinyx'}
 
 html_title = 'Raphael McSinyx'
 html_logo = 'CnX.png'

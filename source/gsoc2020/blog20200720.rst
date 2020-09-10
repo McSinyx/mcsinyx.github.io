@@ -78,7 +78,6 @@ a thousand miles to fall down at the door opening to all
 what you ever wished for!
 
 .. _Travis: https://travis-ci.com/
-.. _my original proposal:
-   https://blogs.python-gsoc.org/media/proposals/pip-parallel-dl.pdf
+.. _my original proposal: ../_static/pip-parallel-dl.pdf
 .. _postmarketOS community edition:
    https://postmarketos.org/blog/2020/07/15/pinephone-ce-preorder/
