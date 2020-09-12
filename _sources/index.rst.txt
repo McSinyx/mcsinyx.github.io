@@ -22,8 +22,7 @@ I also use pretty much every social medium I advocate against:
    <a href='https://stackexchange.com/users/6379504/mcsinyx'
       class='fab fa-stack-exchange'></a>
    <a href='https://www.facebook.com/McSinyx' class='fab fa-facebook'></a>
-   <a href='https://www.linkedin.com/in/raphael-mcsinyx-6871a719a'
-      class='fab fa-linkedin'></a>
+   <a href='https://www.linkedin.com/in/McSinyx' class='fab fa-linkedin'></a>
 
 This site is licensed under
 a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
@@ -33,7 +32,7 @@ a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
    :hidden:
 
    works
-   meat/index
+   life/index
    math/index
 
 .. _My name is: https://www.youtube.com/watch?v=LDj8kkVwisY
