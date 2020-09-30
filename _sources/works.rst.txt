@@ -7,7 +7,7 @@ Applications
 comp
 ^^^^
 
-comp__ is a mpv__ front-end using curses.
+`Curses Omni Media Player`__ is a mpv__ front-end using curses.
 
 .. image::
    https://git.disroot.org/McSinyx/comp/raw/branch/bachelor/doc/screenshot.png
