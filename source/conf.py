@@ -25,9 +25,9 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # Options for HTML output
-html_theme = 'alabaster'
-html_theme_options = {'fixed_sidebar': True,
-                      'donate_url': 'https://liberapay.com/McSinyx'}
+html_theme = 'furo'
+html_theme_options = {'css_variables': {
+    'color-brand-primary': '#436e58', 'color-brand-content': '#436e58'}}
 
 html_title = 'Raphael McSinyx'
 html_logo = 'CnX.png'

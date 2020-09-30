@@ -151,5 +151,6 @@ and was originally hosted on `Python GSoC`_.
    checkin20200824
    blog20200831
 
-.. _internship: https://summerofcode.withgoogle.com/projects/#5428041779511296
+.. _internship:
+   https://summerofcode.withgoogle.com/archive/2020/projects/6238594655584256
 .. _Python GSoC: https://blogs.python-gsoc.org/en/mcsinyxs-blog/
