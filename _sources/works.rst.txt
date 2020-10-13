@@ -119,7 +119,7 @@ and a few *awesome* helper functions that make it easier to register timers,
 suspend widgets and so on.  Vicious doesn't depend on any third party Lua__
 library, but may depend on additional system utilities.
 
-__ https://vicious.readthedocs.io
+__ https://vicious.rtfd.io
 __ https://awesomewm.org
 __ https://www.lua.org
 

@@ -9,7 +9,7 @@ McSinyx on the Fediverse_:
 * Email: mcsinyx@disroot.org
 * Mastodon: `@mcsinyx@librem.one <https://social.librem.one/@mcsinyx>`_
 
-I also use pretty much every social medium I advocate against:
+I also use_ pretty much every social medium I advocate against:
 
 .. raw:: html
 
@@ -37,5 +37,6 @@ a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
 .. _My name is: https://www.youtube.com/watch?v=LDj8kkVwisY
 .. _free software: https://www.gnu.org/philosophy/free-sw.html
 .. _Fediverse: https://en.wikipedia.org/wiki/Fediverse
+.. _use: start.html
 .. _Creative Commons Attribution-ShareAlike 4.0 International License:
    http://creativecommons.org/licenses/by-sa/4.0/
