@@ -17,7 +17,7 @@ extlinks = {'pip': ('https://github.com/pypa/pip/pull/%s', 'GH-'),
             'github': ('https://github.com/%s', '@')}
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -32,7 +32,6 @@ html_theme_options = {'css_variables': {
 html_title = 'Raphael McSinyx'
 html_logo = 'CnX.png'
 html_favicon = 'favicon.ico'
-html_css_files = ['fab.css']
 html_show_copyright = False
 
 # Add any paths that contain custom static files (such as style sheets)
@@ -40,3 +39,5 @@ html_show_copyright = False
 # static files, so a file named "default.css" will overwrite the builtin
 # "default.css".
 html_static_path = ['static']
+html_css_files = ['fab.css']
+html_additional_pages = {'start': 'start.html'}
