@@ -24,6 +24,8 @@ I also use_ pretty much every social medium I advocate against:
    <a href='https://www.facebook.com/McSinyx' class='fab fa-facebook'></a>
    <a href='https://www.linkedin.com/in/McSinyx' class='fab fa-linkedin'></a>
 
+Academically, I am also known as 0000-0003-2336-706X_.
+
 This site is licensed under
 a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
 
@@ -38,5 +40,6 @@ a `Creative Commons Attribution-ShareAlike 4.0 International License`_.
 .. _free software: https://www.gnu.org/philosophy/free-sw.html
 .. _Fediverse: https://en.wikipedia.org/wiki/Fediverse
 .. _use: start.html
+.. _0000-0003-2336-706X: https://orcid.org/0000-0003-2336-706X
 .. _Creative Commons Attribution-ShareAlike 4.0 International License:
    http://creativecommons.org/licenses/by-sa/4.0/

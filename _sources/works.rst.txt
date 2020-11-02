@@ -61,7 +61,7 @@ Lazip
 Lazip__ is a Python library providing a read-only file-like object
 lazily mapped to a ZIP file over HTTP via range requests.
 
-__ https://lazip.rtfd.io
+__ https://sr.ht/~cnx/lazip
 
 Video Games
 -----------
