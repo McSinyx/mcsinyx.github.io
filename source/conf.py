@@ -26,8 +26,11 @@ exclude_patterns = []
 
 # Options for HTML output
 html_theme = 'furo'
-html_theme_options = {'css_variables': {
-    'color-brand-primary': '#436e58', 'color-brand-content': '#436e58'}}
+css_variables = {'color-brand-primary': '#436e58',
+                 'color-brand-content': '#436e58'}
+html_theme_options = {'dark_css_variables': css_variables,
+                      'light_css_variables': css_variables,
+                      'sidebar_hide_name': True}
 
 html_title = 'Raphael McSinyx'
 html_logo = 'CnX.png'
