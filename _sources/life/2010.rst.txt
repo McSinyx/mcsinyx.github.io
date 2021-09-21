@@ -1,6 +1,0 @@
-Why the Name?
-=============
-
-.. seealso:: WhyTheName_
-
-.. _WhyTheName: https://wiki.debian.org/WhyTheName
