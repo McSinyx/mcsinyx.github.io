@@ -1,3 +1,3 @@
 ---
-redirect_to: https://cnx.srht.site
+redirect_to: https://cnx.gdn
 ---

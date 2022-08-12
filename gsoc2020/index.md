@@ -1,3 +1,3 @@
 ---
-redirect_to: https://cnx.srht.site/blog/2020/gsoc
+redirect_to: https://cnx.gdn/blog/2020/gsoc
 ---
